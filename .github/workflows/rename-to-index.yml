@@ -1,0 +1,26 @@
+name: Rename site file to index.html
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rename-to-index.yml'
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename file to index.html
+        run: |
+          if [ -f index.html ]; then
+            echo "index.html already exists, nothing to do"
+            exit 0
+          fi
+          mv dapson-ai-conversation-concept.html index.html
+          git config user.name "aajibad1"
+          git config user.email "aajibad1@users.noreply.github.com"
+          git add -A
+          git commit -m "Rename site file to index.html"
+          git push
